@@ -1,34 +1,44 @@
 package com.example.diceroller
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
-    lateinit var diceImage : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        diceImage = findViewById(R.id.dice_image)
         findViewById<Button>(R.id.roll_button).setOnClickListener() {
             rollDice()
+        }
+        findViewById<Button>(R.id.countup_button).setOnClickListener() {
+            countUp()
         }
     }
 
     private fun rollDice() {
+        Toast.makeText(this, "button clicked", Toast.LENGTH_SHORT).show()
+        val resultText: TextView = findViewById(R.id.result_text)
+
         val randomInt = (1..6).random()
-        val drawableResource = when (randomInt) {
-            1 -> R.drawable.dice_1
-            2 -> R.drawable.dice_2
-            3 -> R.drawable.dice_3
-            4 -> R.drawable.dice_4
-            5 -> R.drawable.dice_5
-            else -> R.drawable.dice_6
-        }
-        diceImage.setImageResource(drawableResource)
+        resultText.text = randomInt.toString()
     }
 
+    private fun countUp() {
+        val resultText: TextView = findViewById(R.id.result_text)
+        if (resultText.text == "Hello World!") {
+            resultText.text = "1"
+            return
+        } else if (resultText.text == "6") {
+            return
+        } else {
+            val countup = resultText.text.toString().toInt() + 1
+            resultText.text = countup.toString()
+        }
+
+    }
 }
